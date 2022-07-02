@@ -1,0 +1,3 @@
+/home/tablet/CLionProjects/libachie/cmake-build-debug/CMakeFiles/libachie.dir
+/home/tablet/CLionProjects/libachie/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/tablet/CLionProjects/libachie/cmake-build-debug/CMakeFiles/rebuild_cache.dir
