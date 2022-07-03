@@ -31,7 +31,7 @@ int main() {
                 int index = 0;
                 int i = 0;
                 if (profiles.size() == 0) {
-                    std::cout << "Нет доступных профилей!";
+                    std::cout << "Нет доступных профилей!\n";
                 } else {
                     for (auto &profile: profiles) {
                         std::cout << i++ << " : " << profile.get_name() << "\n";
