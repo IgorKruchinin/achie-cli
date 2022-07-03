@@ -57,7 +57,6 @@ void hello_msg() {
 }
 
 void in_profile_msg() {
-    system("clear");
     std::cout << "Привет!\n";
     std::cout << "Чтобы добавить достижение, выберите 1\n";
     std::cout << "Чтобы отобразить достижения, выберите 2\n";
@@ -95,7 +94,6 @@ void in_profile_work(Profile &profile) {
                     std::cout << achie.get_date() << "\t" << achie.get_object() << "\t" << achie.get_type() << "\t"
                               << achie.get_value() << "\n";
                 }
-                std::getchar();
                 break;
             }
             case 3: {
