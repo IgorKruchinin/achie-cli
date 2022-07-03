@@ -32,6 +32,7 @@ int main() {
                 int i = 0;
                 if (profiles.size() == 0) {
                     std::cout << "Нет доступных профилей!\n";
+                    std::cin.get();
                 } else {
                     for (auto &profile: profiles) {
                         std::cout << i++ << " : " << profile.get_name() << "\n";
@@ -52,7 +53,6 @@ int main() {
 }
 
 void hello_msg() {
-    system("clear");
     std::cout << "Привет!\n";
     std::cout << "Выберите действие:\n";
     std::cout << "Чтобы создать профиль, выберите 1\n";
