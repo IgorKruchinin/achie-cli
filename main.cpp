@@ -30,12 +30,16 @@ int main() {
             case 2: {
                 int index = 0;
                 int i = 0;
-                for (auto &profile: profiles) {
-                    std::cout << i++ << " : " << profile.get_name() << "\n";
+                if (profiles.size() == 0) {
+                    std::cout << "Нет доступных профилей!";
+                } else {
+                    for (auto &profile: profiles) {
+                        std::cout << i++ << " : " << profile.get_name() << "\n";
+                    }
+                    std::cout << "Выберите нужный индекс: ";
+                    std::cin >> index;
+                    in_profile_work(profiles[index]);
                 }
-                std::cout << "Выберите нужный индекс: ";
-                std::cin >> index;
-                in_profile_work(profiles[index]);
                 break;
             }
             case 3:
@@ -94,6 +98,7 @@ void in_profile_work(Profile &profile) {
                     std::cout << achie.get_date() << "\t" << achie.get_object() << "\t" << achie.get_type() << "\t"
                               << achie.get_value() << "\n";
                 }
+                std::cin.get();
                 break;
             }
             case 3: {
