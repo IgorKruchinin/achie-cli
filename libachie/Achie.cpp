@@ -4,8 +4,8 @@
 
 #include "Achie.h"
 
-Achie::Achie(const std::string &date, const std::string &type, const std::string &object, int value)
-    :date(date), type(type), object(object), value(value){}
+Achie::Achie(const std::string &date, const std::string &object, const std::string &type, int value)
+    :date(date), object(object), type(type), value(value){}
 
 
 std::string &Achie::get_date() {return this->date;}

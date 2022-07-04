@@ -64,8 +64,9 @@ void in_profile_msg() {
     std::cout << "Привет!\n";
     std::cout << "Чтобы добавить достижение, выберите 1\n";
     std::cout << "Чтобы отобразить достижения, выберите 2\n";
-    std::cout << "Чтобы экспортировать достижения из CSV-файла, выберите 3\n";
-    std::cout << "Чтобы выйти из профиля, выберите 4\n";
+    std::cout << "Чтобы импортировать достижения из CSV-файла, выберите 3\n";
+    std::cout << "Чтобы экспортировать достижения в CSV-файл, выберите 4\n";
+    std::cout << "Чтобы выйти из профиля, выберите 5\n";
 }
 
 void in_profile_work(Profile &profile) {
@@ -101,6 +102,19 @@ void in_profile_work(Profile &profile) {
                 std::cin.get();
                 break;
             }
+            case 4: {
+                cmd = -1;
+                std::cout << "Введите путь, куда вы хотите сохранить ваш CSV-файл: ";
+                std::string path;
+                std::cin >> path;
+                std::cout << "\n";
+                if (!profile.to_csv(path)) {
+                    std::cout << "Успешно сохранено!\n";
+                } else {
+                    std::cout << "Невозможно сохранить файл. Проверьте, правильно ли вы указали путь и есть ли права на запись в ту папку, куда вы хотите сохранить файл\n";
+                }
+                break;
+            }
             case 3: {
                 cmd = -1;
                 std::cout << "Введите путь до CSV-файла: ";
@@ -109,7 +123,7 @@ void in_profile_work(Profile &profile) {
                 profile.load_csv(csv_path);
                 break;
             }
-            case 4:
+            case 5:
             {
                 return;
             }

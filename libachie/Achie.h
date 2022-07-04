@@ -12,7 +12,7 @@ class Achie {
     std::string object;
     int value;
 public:
-    Achie(const std::string &date,  const std::string &type, const std::string &object, int value);
+    Achie(const std::string &date,  const std::string &object, const std::string &type, int value);
     Achie() = default;
     std::string &get_date();
     std::string &get_type();

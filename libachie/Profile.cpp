@@ -78,6 +78,23 @@ Profile load_profile(const std::string & name) {
     return in_profile;
 }
 
+int Profile::to_csv(const std::string& path) {
+    std::string csv_string;
+    csv_string = "Дата,Предмет,Тип достижения,Достижение\n";
+    for (auto &achie: this->get_achies()) {
+        csv_string += achie.get_date() + "," + achie.get_object() + "," + achie.get_type() + "," + std::to_string(achie.get_value()) + "\n";
+    }
+    std::ofstream csv_file;
+    csv_file.open(path);
+    if (csv_file.is_open()) {
+        csv_file << csv_string;
+        csv_file.close();
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 void Profile::save_profile() {
     std::ofstream file;
     std::string path = "profiles/" + this->get_name() + ".json";
@@ -154,8 +171,8 @@ void Profile::set_name(std::string& name) {
     this->name = name;
 }
 
-void Profile::add_achie(const std::string &date,  const std::string &type, const std::string &object, int value) {
-    this->achies.emplace_back(std::forward<const std::string &&>(date),  std::forward<const std::string &&>(type), std::forward<const std::string &&>(object), value);
+void Profile::add_achie(const std::string &date,  const std::string &object, const std::string &type, int value) {
+    this->achies.emplace_back(std::forward<const std::string &&>(date),  std::forward<const std::string &&>(object), std::forward<const std::string &&>(type), value);
     this->save_profile();
 }
 

@@ -16,8 +16,9 @@ public:
     Profile(const std::string &name);
     //Profile(char const *name);
     //template <class Val>
-    void add_achie(const std::string &date, const std::string &type, const std::string &object, int value);
+    void add_achie(const std::string &date, const std::string &object, const std::string &type, int value);
     std::string &get_name();
+    int to_csv(const std::string& path);
     void set_name(std::string & name);
     int load_csv(const std::string &filename);
     void save_profile();
