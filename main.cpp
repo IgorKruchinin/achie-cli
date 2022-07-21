@@ -22,7 +22,9 @@ int main() {
         switch (cmd) {
             case 1: {
                 std::string name;
+                std::cout << "Введите имя профиля: ";
                 std::cin >> name;
+                std::cout << '\n';
                 profiles.emplace_back(name);
                 in_profile_work(profiles[profiles.size() - 1]);
                 break;
@@ -83,10 +85,13 @@ void in_profile_work(Profile &profile) {
                 int value;
                 std::cout << "Дата: ";
                 std::cin >> date;
+                //std::getline(std::cin, date);
                 std::cout << "\nПредмет: ";
-                std::cin >> object;
+                //std::cin >> object;
+                std::getline(std::cin >> std::ws, object);
                 std::cout << "\nТип: ";
-                std::cin >> type;
+                // std::cin >> type;
+                std::getline(std::cin >> std::ws, type);
                 std::cout << "\nДостижение: ";
                 std::cin >> value;
                 std::cout << "\n";
