@@ -9,14 +9,24 @@
 #include <cstring>
 #include <fstream>
 
+#include "USM/USM.h"
+
+#if USMVer() < 1
+
+#error USM 1 or later required
+
+#endif
+
 class Profile {
     std::vector<Achie> achies;
     std::string name;
+    ProfileStorage ps;
 public:
     Profile(const std::string &name);
     //Profile(char const *name);
     //template <class Val>
     void add_achie(const std::string &date, const std::string &object, const std::string &type, int value);
+    void add_achie_wos(const std::string &date, const std::string &object, const std::string &type, int value);
     std::string &get_name();
     int to_csv(const std::string& path);
     void set_name(std::string & name);
@@ -26,6 +36,6 @@ public:
 };
 
 
-Profile load_profile(const std::string &name);
+// Profile load_profile(const std::string &name);
 
 #endif //LIBACHIE_PROFILE_H

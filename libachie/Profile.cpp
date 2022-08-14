@@ -12,7 +12,11 @@
 
 #include "json.hpp"
 
-std::vector<std::string> split(const std::string &s, char delim) {
+// #include "USM/USM.h"
+
+bool USM_CONFIG::InTextMode = true;
+
+/* std::vector<std::string> split(const std::string &s, char delim) {
     std::stringstream ss(s);
     std::string item;
     std::vector<std::string> elems;
@@ -21,7 +25,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
         elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
     }
     return elems;
-}
+}*/
 
 
 /*void readline(std::ifstream &file, char * buf) {
@@ -57,7 +61,7 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return buf;
 }*/
 
-Profile load_profile(const std::string & name) {
+/*      Profile load_profile(const std::string & name) {
     using Json = nlohmann::json;
     std::string text_profile;
     std::ifstream file;
@@ -76,7 +80,8 @@ Profile load_profile(const std::string & name) {
         in_profile.add_achie(a["date"], a["object"], a["type"], a["value"]);
     }
     return in_profile;
-}
+
+}       */
 
 int Profile::to_csv(const std::string& path) {
     std::string csv_string;
@@ -96,7 +101,7 @@ int Profile::to_csv(const std::string& path) {
 }
 
 void Profile::save_profile() {
-    std::ofstream file;
+    /*      std::ofstream file;
     std::string path = "profiles/" + this->get_name() + ".json";
     file.open(path);
     std::string text_profile;
@@ -120,11 +125,31 @@ void Profile::save_profile() {
     text_profile += "  ]\n";
     text_profile += "}\n";
     file << text_profile;
-    file.close();
+    file.close();       */
+    for (auto &achie: this->get_achies()) {
+        ps.gets("date").add(achie.get_date());
+        ps.gets("object").add(achie.get_object());
+        ps.gets("type").add(achie.get_type());
+        ps.geti("value").add(achie.get_value());
+    }
+    ps.to_file();
+
 }
 
 Profile::Profile(const std::string &name)
-    :name(name){}
+    :name(name), ps(name) {
+    if (!ps.opened()) {
+        ps.create_ssec("date");
+        ps.create_ssec("object");
+        ps.create_ssec("type");
+        ps.create_isec("value");
+        ps.to_file();
+    } else {
+        for (int i = 0; i < ps.gets("date").get_objects().size(); ++i) {
+            this->add_achie_wos(ps.gets("date")[i], ps.gets("object")[i], ps.gets("type")[i], ps.geti("value")[i]);
+        }
+    }
+}
 
 
 int Profile::load_csv(const std::string &filename) {
@@ -137,6 +162,7 @@ int Profile::load_csv(const std::string &filename) {
         //std::cout << "CSV file is opened";
         std::string str;
         std::vector<std::string> csv_str;
+        bool brace_opened = false;
         //std::cout << "Ready to read lines";
         //csv.getline(str, sizeof(str));
         //std::cout << "line 0 readed";
@@ -145,8 +171,21 @@ int Profile::load_csv(const std::string &filename) {
         str.clear();
         csv_str.clear();
         while (std::getline(csv, str)) {
+            std::string buf;
             //std::cout <<  "Line readed: " << str << "\n";
-            csv_str = split(str, ',');
+            //      csv_str = split(str, ',');
+            for (const auto & c: str) {
+                if (c == '\"') {
+                    brace_opened = !brace_opened;
+                }
+                if (c == ',' && !brace_opened) {
+                    csv_str.emplace_back(buf);
+                    buf.clear();
+                } else {
+                    buf += c;
+                }
+            }
+            csv_str.emplace_back(buf);
             //std::cout << "CSV was parsed: " << csv_str[3] << "\n";
             //std::string date = csv_str[0];
             //std::string type = csv_str[1];
@@ -174,6 +213,10 @@ void Profile::set_name(std::string& name) {
 void Profile::add_achie(const std::string &date,  const std::string &object, const std::string &type, int value) {
     this->achies.emplace_back(std::forward<const std::string &&>(date),  std::forward<const std::string &&>(object), std::forward<const std::string &&>(type), value);
     this->save_profile();
+}
+
+void Profile::add_achie_wos(const std::string &date,  const std::string &object, const std::string &type, int value) {
+    this->achies.emplace_back(std::forward<const std::string &&>(date),  std::forward<const std::string &&>(object), std::forward<const std::string &&>(type), value);
 }
 
 std::vector<Achie> &Profile::get_achies() {

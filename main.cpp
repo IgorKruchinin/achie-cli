@@ -1,5 +1,7 @@
 #include <iostream>
-#include <filesystem>
+// #include <filesystem>
+#include <dirent.h>
+
 #include "libachie/Profile.h"
 
 
@@ -8,13 +10,46 @@ void in_profile_work(Profile& profile);
 void in_profile_msg();
 
 int main() {
-    using std::filesystem::directory_iterator;
+    //      using std::filesystem::directory_iterator;
     setlocale(LC_ALL, "Russian");
     std::vector<Profile> profiles;
-    for (const auto &file : directory_iterator("profiles")) {
-        //std::cout << file.path().c_str();
-        profiles.emplace_back(load_profile(file.path().c_str()));
+
+    std::ifstream profiles_list("profiles/profiles_list.txt");
+    if (profiles_list.is_open()) {
+        std::string prof;
+        while(std::getline(profiles_list, prof)) {
+            profiles.emplace_back(prof);
+            // std::cout <<prof << '\n';
+        }
     }
+
+    /*      for (const auto &file : directory_iterator("profiles")) {
+        //std::cout << file.path().c_str();
+        bool dot = false;
+        bool slash = false;
+        std::string buf;
+        for (const auto & c: std::string(file.path())) {
+            if (c == '.') {
+                dot = true;
+                continue;
+            }
+            if (slash && !dot) {
+                buf += c;
+            }
+            if (c == '/') {
+                slash = true;
+                continue;
+            }
+        }
+        //profiles.emplace_back(buf);
+        std::cout << buf << "\n";
+    }       */
+    /*  int cnt = 0;
+    while ((ent=readdir(dir))) {
+        cnt++;
+        if (cnt > 2)
+            profiles.emplace_back(ent->d_name);
+    }   */
     while (true) {
         int cmd = -1;
         hello_msg();
