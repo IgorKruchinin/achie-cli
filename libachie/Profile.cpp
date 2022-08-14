@@ -192,7 +192,7 @@ int Profile::load_csv(const std::string &filename) {
             //std::string object = csv_str[2];
             //int value = std::stof(csv_str[3]);
             //this->achies.emplace_back(std::move(csv_str[0]), std::move(csv_str[1]), std::move(csv_str[2]), std::stoi(csv_str[3]));
-            this->add_achie_wos(std::forward<const std::string &&>(csv_str[0]),  std::forward<const std::string &&>(csv_str[1]), std::forward<const std::string &&>(csv_str[2]), std::stoi(csv_str[3]));
+            this->add_achie(std::forward<const std::string &&>(csv_str[0]),  std::forward<const std::string &&>(csv_str[1]), std::forward<const std::string &&>(csv_str[2]), std::stoi(csv_str[3]));
             str.clear();
             csv_str.clear();
         }
