@@ -192,7 +192,7 @@ int Profile::load_csv(const std::string &filename) {
             //std::string object = csv_str[2];
             //int value = std::stof(csv_str[3]);
             //this->achies.emplace_back(std::move(csv_str[0]), std::move(csv_str[1]), std::move(csv_str[2]), std::stoi(csv_str[3]));
-            this->add_achie(std::forward<const std::string &&>(csv_str[0]),  std::forward<const std::string &&>(csv_str[1]), std::forward<const std::string &&>(csv_str[2]), std::stoi(csv_str[3]));
+            this->add_achie_wos(std::forward<const std::string &&>(csv_str[0]),  std::forward<const std::string &&>(csv_str[1]), std::forward<const std::string &&>(csv_str[2]), std::stoi(csv_str[3]));
             str.clear();
             csv_str.clear();
         }
@@ -212,7 +212,12 @@ void Profile::set_name(std::string& name) {
 
 void Profile::add_achie(const std::string &date,  const std::string &object, const std::string &type, int value) {
     this->achies.emplace_back(std::forward<const std::string &&>(date),  std::forward<const std::string &&>(object), std::forward<const std::string &&>(type), value);
-    this->save_profile();
+    // this->save_profile();
+    ps.gets("date").add(date);
+    ps.gets("object").add(object);
+    ps.gets("type").add(type);
+    ps.geti("value").add(value);
+    ps.to_file();
 }
 
 void Profile::add_achie_wos(const std::string &date,  const std::string &object, const std::string &type, int value) {
