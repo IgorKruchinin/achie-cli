@@ -12,7 +12,7 @@
 
 // #include "USM/USM.h"
 
-bool USM_CONFIG::InTextMode = true;
+//bool USM_CONFIG::InTextMode = true;
 
 /* std::vector<std::string> split(const std::string &s, char delim) {
     std::stringstream ss(s);
